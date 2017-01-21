@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Example test run">
+  <test name="Simple Test">
+      <groups>
+          <run>
+              <exclude name="standalone"/>
+          </run>
+      </groups>
+    <classes>
+      <class name="sfp.gov.py.scripts.LoginTest"> </class>
+<!--       <class name="sfp.gov.py.scripts.SolicitudPermisoTest"></class> -->
+    </classes>
+  </test>
+</suite>
