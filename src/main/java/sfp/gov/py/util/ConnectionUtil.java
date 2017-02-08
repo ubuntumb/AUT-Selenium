@@ -51,13 +51,14 @@ public class ConnectionUtil {
 	public static void main(String[] arguments) {
 		StringBuilder query = new StringBuilder();
 		// query.append("DROP TABLE test_data; ");
-		query.append("CREATE TABLE test_data ( ");
+		//query.append("ALTER TABLE test_data ADD COLUMN REFERENCE VARCHAR('255');");
+		/*query.append("CREATE TABLE test_data ( ");
 		query.append("id IDENTITY PRIMARY KEY, ");
 		query.append("class_name VARCHAR(255),  ");
 		query.append("element_name VARCHAR(255), ");
 		query.append("element_input VARCHAR(512), ");
 		query.append("element_ouput VARCHAR(512), ");
-		query.append(" );");
+		query.append(" );");*/
 		Statement st;
 		try {
 			st = ConnectionUtil.getInstance().getConnection().createStatement();

@@ -7,6 +7,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
 import sfp.gov.py.core.PageBase;
+import sfp.gov.py.util.CommonUtil;
 import sfp.gov.py.util.WaitTool;
 /**
  * 
@@ -19,6 +20,9 @@ public class DashboardPage extends PageBase {
 	
 	private String username;
 	private String exitButtonLink;
+	private String slimMenu;
+	private String roleButton;
+	private String menuAdmin;
 	
 
 	public DashboardPage(WebDriver driver,String url) {
@@ -27,7 +31,7 @@ public class DashboardPage extends PageBase {
 	}
 
 	public boolean isUserNameLinkPresented() {
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		WaitTool.setImplicitWait(driver, WaitTool.DEFAULT_WAIT_4_ELEMENT);
 		return isElementPresent(By.cssSelector(username));
 	}
 
@@ -48,9 +52,23 @@ public class DashboardPage extends PageBase {
 	}
 	
 	private void loadPropertiesValues(){
-		propertieValue = initElementAttributes(this.getClass().getSimpleName());
+		propertieValue = CommonUtil.getInstance().getElementFromDatabaseByClassName(this.getClass().getSimpleName(), this.getClass().getName());
 		username = propertieValue.get("username").toString();
+		slimMenu = propertieValue.get("slimMenu").toString();
+		roleButton = propertieValue.get("roleButton");
+		menuAdmin = propertieValue.get("menuAdmin");
 		exitButtonLink = propertieValue.get("exitButtonLink").toString();
+	}
+	
+	public RolePage goToRoleView(){
+		
+		WaitTool.setImplicitWait(driver, WaitTool.DEFAULT_WAIT_4_PAGE);
+		JavascriptExecutor js =(JavascriptExecutor) driver;
+		js.executeScript(slimMenu);
+		getElementSearch(By.cssSelector(menuAdmin)).click();
+		js.executeScript(roleButton);
+		return new RolePage(driver,url);
+		
 	}
 
 }

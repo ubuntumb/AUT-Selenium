@@ -47,13 +47,14 @@ public class Operation {
 
 	@SuppressWarnings("rawtypes")
 	public ArrayList<Map> getArrayDataFromParams(String query, Map params) {
+		String defaultQuery = "SELECT * FROM TEST_DATA WHERE class_name = ':className' and element_name is not null";
 		StringBuilder queryBuilder = new StringBuilder();
 		Statement sqlStat;
 		ResultSet resultBySearch;
 		ArrayList resultToReturn = new ArrayList<>();
 		Map<String, String> rowValues = new HashMap<>();
 		Map<String, String> columValues = new HashMap<>();
-		String defaultQuery = "SELECT ELEMENT_NAME,ELEMENT_INPUT,ELEMENT_OUPUT FROM TEST_DATA WHERE class_name = ':className' and element_name is not null";
+		
 		query = query.equals("") ? defaultQuery : query;
 		queryBuilder.append(CommonUtil.stringFormMap(query, params));
 		try {

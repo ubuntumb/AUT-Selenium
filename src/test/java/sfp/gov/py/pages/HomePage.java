@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import sfp.gov.py.core.PageBase;
+import sfp.gov.py.util.CommonUtil;
 /**
  * 
  * @author mbenitez Copyright [2017] [Marcos Benitez]
@@ -27,7 +28,7 @@ public class HomePage extends PageBase {
 	}
 	
 	private void loadPropertiesValues(){
-		propertieValue = initElementAttributes(this.getClass().getSimpleName());
+		propertieValue = CommonUtil.getInstance().getElementFromDatabaseByClassName(this.getClass().getSimpleName(), this.getClass().getName());
 		accessButton = propertieValue.get("accessButton").toString();
 	}
 

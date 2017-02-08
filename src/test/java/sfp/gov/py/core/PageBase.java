@@ -1,17 +1,12 @@
 package sfp.gov.py.core;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
-import sfp.gov.py.util.ConnectionUtil;
-import sfp.gov.py.util.Operation;
 
 /**
  * 
@@ -76,34 +71,9 @@ public class PageBase {
 	protected WebElement getElementSearch(By by) {
 		return driver.findElement(by);
 	}
-
-	protected Map<String, String> initElementAttributes(String className) {
-		Operation operation = new Operation(ConnectionUtil.getInstance().getConnection());
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("className", className);
-		ArrayList<Map> listValues = operation.getArrayDataFromParams("", params);
-
-		return copyDataIntoEntity(className, listValues);
-	}
-
-	private Map<String, String> copyDataIntoEntity(String className, ArrayList<Map> listValues) {
-		Map<String, String> valuesToReturn = new HashMap<>();
-		try {
-			Class clazz = Class.forName("sfp.gov.py.pages." + className);
-			Field[] listProperties = clazz.getDeclaredFields();
-			for (Field field : listProperties) {
-				valuesToReturn.put(field.getName(), "");
-			}
-			for (Map value : listValues) {
-				if (valuesToReturn.containsKey(value.get("ELEMENT_NAME").toString())) {
-					valuesToReturn.remove(value.get("ELEMENT_NAME").toString());
-					valuesToReturn.put(value.get("ELEMENT_NAME").toString(), value.get("ELEMENT_INPUT").toString());
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return valuesToReturn;
+	
+	protected List<WebElement> getElementsSearch(By by) {
+		return driver.findElements(by);
 	}
 
 }
