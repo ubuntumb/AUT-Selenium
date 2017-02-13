@@ -35,7 +35,7 @@ public class TestBase {
 		this.driver = CHDriver.getDriver();
 		WaitTool.setImplicitWait(driver, WaitTool.DEFAULT_WAIT_4_PAGE);
 		ConfigLoader conf = ConfigLoader.getInstance();
-		this.baseUrl = conf.getConfigResourceConf().getProperty("baseUrl");
+		this.baseUrl = conf.getConfigResourceConf().getProperty("app.baseUrl");
 		login = new LoginPage(driver, baseUrl);
 		
 		List valoresIniciales = CommonUtil.getInstance().getAllElementFromDatabaseByClassName(LoginTest.class.getSimpleName(), LoginTest.class.getName());

@@ -12,7 +12,8 @@ import java.util.Map;
 /**
  * 
  * @author mbenitez Copyright [2017] [Marcos Benitez]
- * Licensed under the Apache Open Source License, Version 2.0
+ * Licensed under the Apache 
+ * Open Source License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0
  * 
  */

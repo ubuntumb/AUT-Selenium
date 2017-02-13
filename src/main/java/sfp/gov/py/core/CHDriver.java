@@ -13,7 +13,8 @@ import sfp.gov.py.util.ConfigLoader;
 /**
  * 
  * @author mbenitez Copyright [2017] [Marcos Benitez]
- * Licensed under the Apache Open Source License, Version 2.0
+ * Licensed under the Apache 
+ * Open Source License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0
  * 
  */
@@ -39,7 +40,7 @@ public class CHDriver {
 
 	private static void createRemoteWebDriver() {
 		try {
-			driver = new RemoteWebDriver(new URL(properties.getProperty("selenium-server-url")), capability);
+			driver = new RemoteWebDriver(new URL(properties.getProperty("app.selenium-server-url")), capability);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
@@ -50,7 +51,7 @@ public class CHDriver {
 	}
 
 	private static void loadCapabilities() {
-		System.setProperty("webdriver.chrome.driver", properties.getProperty("chromeDriver"));
+		System.setProperty("webdriver.chrome.driver", properties.getProperty("app.chromeDriver"));
 		capability = DesiredCapabilities.chrome();
 	}
 }

@@ -15,9 +15,10 @@ import sfp.gov.py.util.ConfigLoader;
 
 /**
  * 
- * @author mbenitez Copyright [2017] [Marcos Benitez] Licensed under the Apache
- *         Open Source License, Version 2.0
- *         http://www.apache.org/licenses/LICENSE-2.0
+ * @author mbenitez Copyright [2017] [Marcos Benitez] 
+ * Licensed under the Apache
+ * Open Source License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  * 
  */
 public class FFDriver {
@@ -45,7 +46,7 @@ public class FFDriver {
 	private static void createRemoteWebDriver() {
 
 		try {
-			driver = new RemoteWebDriver(new URL(properties.getProperty("selenium-server-url")), capability);
+			driver = new RemoteWebDriver(new URL(properties.getProperty("app.selenium-server-url")), capability);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}

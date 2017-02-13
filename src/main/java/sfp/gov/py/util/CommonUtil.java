@@ -12,7 +12,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
+/**
+ * 
+ * @author mbenitez Copyright [2017] [Marcos Benitez]
+ * Licensed under the Apache Open Source License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ */
 public class CommonUtil {
 
 	private static CommonUtil commonUtil;
@@ -141,24 +147,27 @@ public class CommonUtil {
 	public Map<String, String> getElementFromDatabaseByClassName(String className, String fullClassName) {
 
 		ArrayList listValues = getDataFromDatabase(className);
-
+		System.out.println("Single******************");
+		System.out.println(listValues);
+		System.out.println("Single******************");
 		return getSingleDataFromList(fullClassName, listValues);
 	}
 
 	/**
 	 * Metodo que obtiene todos los valores de una entidad especifica
 	 * 
-	 * @param className,
-	 *            nombre de la clase a obtener desde la base de datos
-	 * @param fullClassName,
-	 *            Nombre completo de clase incluyendo el paquete de la misma
-	 * @return
+	 * @param className Nombre de la clase a obtener desde la base de datos
+	 * @param fullClassName Nombre de Clase a utilizar como referencia para crear un Map con los atributos definidos en ella
+	 * @return ArrayList
 	 */
 	@SuppressWarnings("rawtypes")
 	public ArrayList getAllElementFromDatabaseByClassName(String className, String fullClassName) {
 
 		ArrayList listValues = getDataFromDatabase(className);
-
+		System.out.println("All******************");
+		System.out.println(listValues);
+		System.out.println("All******************");
+		
 		return getAllDataFromListMap(fullClassName, listValues);
 	}
 
@@ -231,9 +240,7 @@ public class CommonUtil {
 				if (properties.containsKey(mapValue.get(Table.ELEMENT_NAME.getDescripcion()))) {
 					entityValue.put(mapValue.get(Table.ELEMENT_NAME.getDescripcion()),
 							mapValue.get(Table.ELEMENT_INPUT.getDescripcion()).toString());
-					if ((mapValue.get(Table.ELEMENT_OUPUT.getDescripcion()) != null
-							|| mapValue.get(Table.ELEMENT_OUPUT.getDescripcion()) != "")
-							&& mapValue.get(Table.ELEMENT_OUPUT.getDescripcion()).toString().length() > 0) {
+					if (mapValue.get(Table.ELEMENT_OUPUT.getDescripcion()) != null ) {
 						entityValue.put("valid", mapValue.get(Table.ELEMENT_OUPUT.getDescripcion()).toString());
 					}
 				}

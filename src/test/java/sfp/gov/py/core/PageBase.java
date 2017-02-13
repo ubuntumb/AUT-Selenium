@@ -8,11 +8,14 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import sfp.gov.py.util.WaitTool;
+
 /**
  * 
- * @author mbenitez Copyright [2017] [Marcos Benitez] Licensed under the Apache
- *         Open Source License, Version 2.0
- *         http://www.apache.org/licenses/LICENSE-2.0
+ * @author mbenitez Copyright [2017] [Marcos Benitez] 
+ * Licensed under the Apache
+ * Open Source License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  * 
  */
 public class PageBase {
@@ -71,9 +74,13 @@ public class PageBase {
 	protected WebElement getElementSearch(By by) {
 		return driver.findElement(by);
 	}
-	
+
 	protected List<WebElement> getElementsSearch(By by) {
 		return driver.findElements(by);
+	}
+
+	public void waitForElementPresent(By selector) {
+		WaitTool.waitForElementPresent(driver, selector, WaitTool.DEFAULT_WAIT_4_ELEMENT);
 	}
 
 }
