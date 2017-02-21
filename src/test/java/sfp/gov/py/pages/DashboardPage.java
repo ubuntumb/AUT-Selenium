@@ -1,7 +1,6 @@
 package sfp.gov.py.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
 import sfp.gov.py.core.PageBase;
@@ -10,10 +9,9 @@ import sfp.gov.py.util.WaitTool;
 
 /**
  * 
- * @author mbenitez Copyright [2017] [Marcos Benitez] 
- * Licensed under the Apache 
- * Open Source License, Version 2.0
- * http://www.apache.org/licenses/LICENSE-2.0
+ * @author mbenitez Copyright [2017] [Marcos Benitez] Licensed under the Apache
+ *         Open Source License, Version 2.0
+ *         http://www.apache.org/licenses/LICENSE-2.0
  * 
  */
 public class DashboardPage extends PageBase {
@@ -24,6 +22,9 @@ public class DashboardPage extends PageBase {
 	private String roleButton;
 	private String menuAdmin;
 	private String usuarioButton;
+	private String configGralButton;
+	private String logButton;
+	private String auditButton;
 
 	public DashboardPage(WebDriver driver, String url) {
 		super(driver, url);
@@ -50,36 +51,54 @@ public class DashboardPage extends PageBase {
 
 	public HomePage clickToExitButton() {
 
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript(exitButtonLink);
+		executeJavascript(exitButtonLink);
+
 		return new HomePage(driver, url);
 	}
 
 	public void goToAdminMenu() {
 
 		WaitTool.setImplicitWait(driver, WaitTool.DEFAULT_WAIT_4_PAGE);
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript(slimMenu);
+		executeJavascript(slimMenu);
 		getElementSearch(By.cssSelector(menuAdmin)).click();
 
 	}
-	
-	public RolePage goToRoleView(){
-		
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript(roleButton);
-		
+
+	public RolePage goToRoleView() {
+
+		executeJavascript(roleButton);
+
 		return new RolePage(driver, url);
-		
+
 	}
-	
-	public UsuarioPage goToUsuarioView(){
-		
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript(usuarioButton);
-		
+
+	public UsuarioPage goToUsuarioView() {
+
+		executeJavascript(usuarioButton);
+
 		return new UsuarioPage(driver, url);
 	}
+
+	public ConfiguracionPage goToConfigGralView() {
+
+		executeJavascript(configGralButton);
+
+		return new ConfiguracionPage(driver, url);
+	}
+
+	public LogPage goToLogView() {
+
+		executeJavascript(logButton);
+
+		return new LogPage(driver, url);
+	}
+	
+	public AuditoriaPage goToAuditView() {
+		WaitTool.resetImplicitWait(driver);
+		executeJavascript(auditButton);
+		return new AuditoriaPage(driver, url);
+	}
+	
 
 	private void loadPropertiesValues() {
 
@@ -91,6 +110,10 @@ public class DashboardPage extends PageBase {
 		menuAdmin = propertieValue.get("menuAdmin");
 		exitButtonLink = propertieValue.get("exitButtonLink").toString();
 		usuarioButton = propertieValue.get("usuarioButton").toString();
+		configGralButton = propertieValue.get("configGralButton").toString();
+		logButton = propertieValue.get("logButton").toString();
+		auditButton = propertieValue.get("auditButton").toString();
 	}
+
 
 }

@@ -147,9 +147,6 @@ public class CommonUtil {
 	public Map<String, String> getElementFromDatabaseByClassName(String className, String fullClassName) {
 
 		ArrayList listValues = getDataFromDatabase(className);
-		System.out.println("Single******************");
-		System.out.println(listValues);
-		System.out.println("Single******************");
 		return getSingleDataFromList(fullClassName, listValues);
 	}
 
@@ -164,10 +161,6 @@ public class CommonUtil {
 	public ArrayList getAllElementFromDatabaseByClassName(String className, String fullClassName) {
 
 		ArrayList listValues = getDataFromDatabase(className);
-		System.out.println("All******************");
-		System.out.println(listValues);
-		System.out.println("All******************");
-		
 		return getAllDataFromListMap(fullClassName, listValues);
 	}
 

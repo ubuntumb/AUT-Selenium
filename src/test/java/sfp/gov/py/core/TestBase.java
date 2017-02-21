@@ -28,14 +28,24 @@ public class TestBase {
 	protected String baseUrl;
 	protected DashboardPage home;
 	protected LoginPage login;
+	protected enum TIPO_DRIVER { FFDRIVER, CHDRIVER};
 
 	@BeforeTest
 	public void beforeSuite() {
 
-		this.driver = CHDriver.getDriver();
-		WaitTool.setImplicitWait(driver, WaitTool.DEFAULT_WAIT_4_PAGE);
 		ConfigLoader conf = ConfigLoader.getInstance();
 		this.baseUrl = conf.getConfigResourceConf().getProperty("app.baseUrl");
+		String appDriverUse = conf.getConfigResourceConf().getProperty("app.driver");
+		
+		if(appDriverUse.equals(TIPO_DRIVER.FFDRIVER.toString())){
+			this.driver = FFDriver.getDriver();
+		}else if(appDriverUse.equals(TIPO_DRIVER.CHDRIVER.toString())){
+			this.driver = CHDriver.getDriver();
+		}else{
+			this.driver = FFDriver.getDriver();
+		}
+		
+		WaitTool.setImplicitWait(driver, WaitTool.DEFAULT_WAIT_4_PAGE);
 		login = new LoginPage(driver, baseUrl);
 		
 		List valoresIniciales = CommonUtil.getInstance().getAllElementFromDatabaseByClassName(LoginTest.class.getSimpleName(), LoginTest.class.getName());
