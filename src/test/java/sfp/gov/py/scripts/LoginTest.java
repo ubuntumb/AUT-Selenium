@@ -46,7 +46,7 @@ public class LoginTest {
 		this.driver = CHDriver.getDriver();
 		this.driver.manage().timeouts().implicitlyWait(WaitTool.DEFAULT_WAIT_4_ELEMENT, TimeUnit.SECONDS);
 		ConfigLoader conf = ConfigLoader.getInstance();
-		this.baseUrl = conf.getConfigResourceConf().getProperty("baseUrl");
+		this.baseUrl = conf.getConfigResourceConf().getProperty("app.baseUrl");
 
 	}
 
