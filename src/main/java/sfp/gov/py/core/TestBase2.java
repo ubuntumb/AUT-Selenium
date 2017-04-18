@@ -25,6 +25,7 @@ public class TestBase2 {
 
 	protected WebDriver driver;
 	protected String baseUrl;
+	public static List<TestAction> actions;
 
 	@BeforeTest
 	public void beforeSuite() {
@@ -128,21 +129,25 @@ public class TestBase2 {
 		actionSleepFinal.setExpression("5");
 		actionSleepFinal.setEnumType(TestActionType.sleep);
 		
-		List<TestAction> actions = new ArrayList<>();
-		actions.add(actionLimpUser);
-		actions.add(actionLimpPass);
-		actions.add(action1);
-		actions.add(action2);
-		actions.add(actionSleep);
-		actions.add(action3);
-		actions.add(action4);
-		actions.add(actionAssert1);
-		actions.add(actionAlert);
-		actions.add(actionSleepFinal);
+//		actions = new ArrayList<>();
+//		actions.add(action4);
+//		
+//		actions.add(actionLimpUser);
+//		actions.add(actionLimpPass);
+//		actions.add(action1);
+//		actions.add(action2);
+//		actions.add(actionSleep);
+//		actions.add(action3);
+//		
+//		actions.add(actionAssert1);
+//		actions.add(actionAlert);
+//		actions.add(actionSleepFinal);
 		
 		testCase.setTestActions(actions);
 		
-		PageBase2 page = new PageBase2(driver, baseUrl+"public/login.xhtml");
+//		PageBase2 page = new PageBase2(driver, baseUrl+"public/login.xhtml");
+		
+		PageBase2 page = new PageBase2(driver, baseUrl);
 		page.open();
 		
 		for (TestAction testAction : testCase.getTestActions()) {
