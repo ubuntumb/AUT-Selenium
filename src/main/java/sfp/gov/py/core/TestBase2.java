@@ -44,30 +44,30 @@ public class TestBase2 {
 		WaitTool.setImplicitWait(driver, WaitTool.DEFAULT_WAIT_4_PAGE);
 	}
 	
-	private By getBy(TestAction action) {
+	private By getBy(TestAction action) throws Exception {
 		switch (action.getEnumGetElementBy()) {
 		case cssSelector:
 			return By.cssSelector(action.getExpression());
-
+		case id:
+			return By.id(action.getExpression());
 		default:
-			break;
+			throw new Exception("Selector '" + action.getEnumGetElementBy() + "' no soportado");
 		}
-		return null;
 	}
 	
-	private WebElement getElementSearch(PageBase2 page, TestAction action) {
+	private WebElement getElementSearch(PageBase2 page, TestAction action) throws Exception {
 		By by = getBy(action);
 		return page.getElementSearch(by);
 	}
 	
-	public boolean isElementPresent(PageBase2 page, TestAction action) {
+	public boolean isElementPresent(PageBase2 page, TestAction action) throws Exception {
 		By by = getBy(action);
 		page.waitForElementPresent(by);
 		return page.isElementPresent(by);
 	}
 
 	@Test
-	public void testLogin() {
+	public void test() throws Exception {
 		TestCase testCase = new TestCase();
 		
 		TestAction actionLimpUser = new TestAction();
@@ -171,6 +171,13 @@ public class TestBase2 {
 			case check_if_element_exists:
 				boolean isPresent = isElementPresent(page, testAction);
 				Assert.assertEquals(isPresent, Boolean.parseBoolean("true"));
+				break;
+			case wait_for_element_present:
+				By by = getBy(testAction);
+				page.waitForElementPresent(by);
+				break;
+			case wait_for_page_to_load:
+				page.waitForPageToLoad();
 				break;
 			case execute_javascript:
 				page.executeJavascript(testAction.getExpression());

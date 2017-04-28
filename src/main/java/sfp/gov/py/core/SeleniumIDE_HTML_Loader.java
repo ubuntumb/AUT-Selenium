@@ -12,6 +12,9 @@ import java.util.UUID;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.openqa.grid.internal.utils.configuration.StandaloneConfiguration;
+import org.openqa.selenium.remote.server.SeleniumServer;
+import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
 import org.testng.TestNG;
 import org.w3c.dom.Document;
@@ -28,8 +31,15 @@ public class SeleniumIDE_HTML_Loader {
 	private static List<TestAction> configureAction(String command, String target, String value) {
 		List<TestAction> actions = new ArrayList<>();
 		TestAction action = new TestAction();
-		if (command.equals("click") || command.equals("clickAndWait"))
+		TestAction actionAfter = null;
+		if (command.equals("click")) {
 			action.setEnumType(TestActionType.click_event);
+		}
+		else if (command.equals("clickAndWait")) {
+			action.setEnumType(TestActionType.click_event);
+			actionAfter = new TestAction();
+			actionAfter.setEnumType(TestActionType.wait_for_page_to_load);
+		}
 		else if (command.equals("type")) {
 			action.setEnumType(TestActionType.element_value_assignation);
 			action.setExpression(value);
@@ -50,6 +60,8 @@ public class SeleniumIDE_HTML_Loader {
 		if (!value.isEmpty())
 			action.setElementValue(value);
 		actions.add(action);
+		if (actionAfter != null)
+			actions.add(actionAfter);
 		System.out.println("Command : " + command);
 		System.out.println("Target : " + target);
 		System.out.println("Value : " + value);
@@ -96,7 +108,19 @@ public class SeleniumIDE_HTML_Loader {
 	}
 	
 	public static void main(String[] args) throws Exception {
+		StandaloneConfiguration config = new StandaloneConfiguration();
+		SeleniumServer server = new SeleniumServer(config);
+		server.boot();
+		
 		TestBase2.actions =  importFromHTML("C:/Users/user/Desktop/Nueva carpeta (2)/prueba.html");
+		TestAction mensaje = new TestAction();
+		mensaje.setEnumType(TestActionType.execute_javascript);
+		mensaje.setExpression("alert('prueba finalizada. se cerrara la ventana en 5 segundos');");
+		TestBase2.actions.add(mensaje);
+		TestAction sleep = new TestAction();
+		sleep.setEnumType(TestActionType.sleep);
+		sleep.setExpression("5");
+		TestBase2.actions.add(sleep);
 		System.out.println("-------------ACCIONES----------------");
 		for (TestAction testAction : TestBase2.actions) {
 			System.out.println("Expresion: " + testAction.getExpression());
@@ -105,10 +129,19 @@ public class SeleniumIDE_HTML_Loader {
 			System.out.println("Valor: " + testAction.getElementValue());
 			System.out.println("------------");
 		}
-		TestListenerAdapter tla = new TestListenerAdapter();
+		TestListenerAdapter tla = new TestListenerAdapter() {
+			
+			@Override
+			public void onTestFailure(ITestResult tr) {
+				tr.getThrowable().printStackTrace();
+				super.onTestFailure(tr);
+			}
+		};
 		TestNG testng = new TestNG();
 		testng.setTestClasses(new Class[] { TestBase2.class });
 		testng.addListener(tla);
 		testng.run();
+		
+		server.stop();
 	}
 }
